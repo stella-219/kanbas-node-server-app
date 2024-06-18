@@ -21,14 +21,17 @@ export default function CourseRoutes(app) {
     }
   });
 
-  // Update the course with the id provided in the path parameters with the course provided in the request body.
   app.put("/api/courses/:id", async (req, res) => {
     const { id } = req.params;
     const course = req.body;
     try {
-      await dao.updateCourse(id, course);
+      console.log("Updating course with ID:", id); // Debug log
+      console.log("Course data:", course); // Debug log
+      const result = await dao.updateCourse(id, course);
+      console.log("Update result:", result); // Debug log
       res.sendStatus(204);
     } catch (error) {
+      console.error("Error updating course:", error); // Debug log
       res.status(500).json({ error: error.message });
     }
   });
