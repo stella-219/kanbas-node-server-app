@@ -9,27 +9,27 @@ import ModuleRoutes from "./Kanbas/Modules/routes.js";
 import AssignmentRoutes from './Kanbas/Assignments/routes.js'
 import cors from "cors"
 import session from "express-session";
-const CONNECTION_STRING = "mongodb+srv://shaonian1229:Xiangpassword@kanbas.guv5hni.mongodb.net/Kanbas" || "mongodb://127.0.0.1:27017/kanbas"
-mongoose.connect(CONNECTION_STRING);
+const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kanbas"
+mongoose.connect(CONNECTION_STRING)
 const app = express()
 app.use(
   cors({
    credentials: true,
-   origin: "https://a6--stunning-swan-6777ae.netlify.app" || "http://localhost:3000",
+   origin: process.env.NETLIFY_URL || "http://localhost:3000",
  })
 )
 app.use(express.json());
 const sessionOptions = {
-  secret: process.env.SESSION_SECRET || "kanbas",
-  resave: false,
-  saveUninitialized: false,
+secret: process.env.SESSION_SECRET || "kanbas",
+resave: false,
+saveUninitialized: false,
 };
 if (process.env.NODE_ENV !== "development") {
-  sessionOptions.proxy = true;
-  sessionOptions.cookie = {
+   sessionOptions.proxy = true;
+   sessionOptions.cookie = {
     sameSite: "none",
     secure: true,
-    domain: process.env.NODE_SERVER_DOMAIN,
+   domain: process.env.NODE_SERVER_DOMAIN,
   };
 }
 app.use(session(sessionOptions));
