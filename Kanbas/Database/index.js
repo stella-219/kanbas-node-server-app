@@ -4,6 +4,9 @@ import assignments from "./assignments.js";
 import users from "./users.js";
 import grades from "./grades.js";
 import enrollments from "./enrollments.js";
+import quizzes from "./quizzes.js";
+import questions from "./questions.js";
+import answers from "./answers.js";
 
 export default { 
     courses, 
@@ -11,5 +14,8 @@ export default {
     assignments, 
     users, 
     grades, 
-    enrollments 
+    enrollments,
+    quizzes,
+    questions,
+    answers
 };

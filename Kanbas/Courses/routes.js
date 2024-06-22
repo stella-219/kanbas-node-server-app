@@ -25,8 +25,6 @@ export default function CourseRoutes(app) {
     const { id } = req.params;
     const course = req.body;
     try {
-      console.log("Updating course with ID:", id); // Debug log
-      console.log("Course data:", course); // Debug log
       const result = await dao.updateCourse(id, course);
       console.log("Update result:", result); // Debug log
       res.sendStatus(204);
