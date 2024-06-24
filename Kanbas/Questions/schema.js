@@ -12,6 +12,6 @@ const questionsSchema = new mongoose.Schema({
     answers: { type: mongoose.Schema.Types.Mixed },
     points: Number
 },
-{collection: "questions"}
+{collection: "questions", versionKey: false}
 );
 export default questionsSchema;

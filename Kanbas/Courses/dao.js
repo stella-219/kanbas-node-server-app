@@ -4,7 +4,7 @@ export const createCourse = async (course) => {
     try {
         console.log("Creating course with data:", course);
         delete course._id;
-        const newCourse = await CourseModel.create(course);
+        const newCourse = await model.create(course);
         return newCourse;
     } catch (error) {
         console.error("Error in createCourse DAO method:", error);
@@ -21,5 +21,5 @@ export const deleteCourse = (courseId) =>
     model.deleteOne({ _id: courseId });
 
 export const findCoursesByAuthor = (author) => {
-    return CourseModel.find({ author });
+    return model.find({ author });
 }
