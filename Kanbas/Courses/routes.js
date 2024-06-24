@@ -26,12 +26,22 @@ export default function CourseRoutes(app) {
 
    
     app.post("/api/courses", async (req, res) => {
-        const course = req.body;
+        const currentUser = req.session.currentUser;
+        console.log("Current user:", currentUser); 
+        if (!currentUser) {
+            res.sendStatus(401);
+            return;
+        }
         try {
-            const newCourse = await dao.createCourse(course);
+            console.log("Request body:", req.body);
+            const newCourse = await dao.createCourse({
+                ...req.body,
+                author: currentUser._id,
+            });
             res.json(newCourse);
         } catch (error) {
-            res.status(500).send(error);
+            console.error("Error creating course:", error);
+            res.status(500).send({ error: error.message });
         }
     });
 
@@ -43,5 +53,38 @@ export default function CourseRoutes(app) {
             res.status(500).send(error);
         }
     });
+
+    // app.get("/api/courses/published", async (req, res) => {
+    //     const currentUser = req.session.currentUser;
+    //     if (!currentUser) {
+    //         res.send([]);
+    //         return;
+    //     }
+    //     try {
+    //         const courses = await dao.findCoursesByAuthor(currentUser._id);
+    //         console.log("courses",courses)
+    //         res.send(courses);
+    //     } catch (error) {
+    //         res.status(500).send(error);
+    //     }
+    // });
+
+    app.get("/api/courses/published", async (req, res) => {
+        const currentUser = req.session.currentUser;
+        if (!currentUser) {
+            res.send([]);
+            return;
+        }
+        try {
+            console.log("Fetching courses for user:", currentUser._id); // Added
+            const courses = await dao.findCoursesByAuthor(currentUser._id);
+            console.log("Fetched courses:", courses); // Added
+            res.send(courses);
+        } catch (error) {
+            console.error("Error fetching published courses:", error); // Added
+            res.status(500).send({ message: "Internal Server Error", error: error.message }); // Modified
+        }
+    });
+    
 
 }

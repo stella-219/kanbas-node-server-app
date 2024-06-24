@@ -11,6 +11,7 @@ const quizSchema = new mongoose.Schema({
     time_limit: { type: String, enum: ["Yes", "No"] },
     how_long: String,
     multiple_attempts: { type: String, enum: ["Yes", "No"] },
+    how_many_attempts: String,
     show_correct_answers: String,
     access_code: { type: String, enum: ["Yes", "No"] }, 
     access_code_number: String,
