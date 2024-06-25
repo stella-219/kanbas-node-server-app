@@ -68,6 +68,7 @@ const recordSchema = new mongoose.Schema({
     timeTaken: { type: String, required: true }, // Storing time as a string (e.g., "19 minutes 30 seconds")
     score: { type: Number, required: true },
     pointsForQuiz: { type: Number, required: true },
+    keptScore: { type: Number, required: true },
     answers: { type: [answersSchema] },
   },
 { collection: "records", versionKey: false}
